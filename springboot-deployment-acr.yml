@@ -21,3 +21,29 @@ spec:
         image: jan22azuredevopsregistry.azurecr.io/springboot-maven-course-micro-svc:4
         ports:
         - containerPort: 8080
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+              - ALL
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /course-svc/getAllAwsServices
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /course-svc/getAllAwsServices
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 5

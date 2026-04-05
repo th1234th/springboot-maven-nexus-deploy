@@ -4,7 +4,7 @@ pipeline{
        
     }
     agent {
-        label 'master'
+        label 'build-agent'
         }
         stages{
             stage('git stage'){
